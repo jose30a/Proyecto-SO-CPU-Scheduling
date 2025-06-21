@@ -1,37 +1,39 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -I./src/core -I./src/algorithms -I./src/ui
+# -I. includes the current directory (project root) for headers.
+# Other -I flags are for specific source subdirectories where headers might reside.
+CXXFLAGS = -Wall -Wextra -std=c++17 -I. -I$(SRC_DIR) -I$(CORE_DIR) -I$(ALGORITHMS_DIR) -I$(UI_DIR)
 LDFLAGS =
 
-# Qt specific flags (adjust paths if necessary for your MinGW-w64 Qt installation)
-# You might need to find where qmake is located and then use it to get the correct flags.
-# For example, on Windows with Qt installed, it might be in C:\Qt\5.15.2\mingw81_64\bin\qmake.exe
-# And the includes and libs would be in C:\Qt\5.15.2\mingw81_64\include and C:\Qt\5.15.2\mingw81_64\lib
-QT_MOC_FLAGS = -fPIC
-QT_INCLUDE_PATH = -I$(QTDIR)/include -I$(QTDIR)/include/QtCore -I$(QTDIR)/include/QtGui -I$(QTDIR)/include/QtWidgets
-QT_LIB_PATH = -L$(QTDIR)/lib
+# Qt specific flags (adjust QTDIR if necessary for your MinGW-w64 Qt installation)
+
+QTDIR = "C:/Qt/6.9.1/mingw_64"
+QT_INCLUDE_PATH = -I"$(QTDIR)/include" -I"$(QTDIR)/include/QtCore" -I"$(QTDIR)/include/QtGui" -I"$(QTDIR)/include/QtWidgets"
+QT_LIB_PATH = -L"$(QTDIR)/lib"
 QT_LIBS = -lQt5Widgets -lQt5Gui -lQt5Core
 
-# Project structure
+# Project structure directories
 SRC_DIR = src
 CORE_DIR = $(SRC_DIR)/core
 ALGORITHMS_DIR = $(SRC_DIR)/algorithms
 UI_DIR = $(SRC_DIR)/ui
 BUILD_DIR = build
 
-# Source files
-CORE_SRCS = $(CORE_DIR)/process.cpp $(CORE_DIR)/scheduler.cpp $(CORE_DIR)/metrics.cpp
-ALGORITHM_SRCS = $(ALGORITHMS_DIR)/fcfs.cpp $(ALGORITHMS_DIR)/sjf.cpp $(ALGORITHMS_DIR)/rr.cpp $(ALGORITHMS_DIR)/priority.cpp
-UI_SRCS = $(UI_DIR)/interface.cpp $(UI_DIR)/results_display.cpp
-MAIN_SRC = $(SRC_DIR)/main.cpp
+# List all source files explicitly with their full paths relative to the Makefile
+SRCS = $(SRC_DIR)/main.cpp \
+       $(CORE_DIR)/process.cpp \
+       $(CORE_DIR)/scheduler.cpp \
+       $(CORE_DIR)/metrics.cpp \
+       $(ALGORITHMS_DIR)/fcfs.cpp \
+       $(ALGORITHMS_DIR)/sjf.cpp \
+       $(ALGORITHMS_DIR)/rr.cpp \
+       $(ALGORITHMS_DIR)/priority.cpp \
+       $(UI_DIR)/interface.cpp \
+       $(UI_DIR)/results_display.cpp
 
-SRCS = $(MAIN_SRC) $(CORE_SRCS) $(ALGORITHM_SRCS) $(UI_SRCS)
-
-# Object files
+# Object files: Transform source paths (e.g., src/main.cpp) into
+# object paths within the build directory (e.g., build/src/main.o)
 OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRCS))
-# For Qt, you might also have MOC files if using signals/slots with custom classes.
-# This example assumes simple .cpp files for UI, if you use Qt Creator or design files,
-# you'll need to run moc on the header files that contain Q_OBJECT.
 
 # Executable name
 TARGET = $(BUILD_DIR)/simulator.exe
@@ -39,21 +41,33 @@ TARGET = $(BUILD_DIR)/simulator.exe
 # Default target
 all: $(TARGET)
 
-# Rule to create the build directory if it doesn't exist
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+# Rule to link all object files into the final executable
+# The | $(BUILD_DIR) makes sure the main build directory exists before linking.
+$(TARGET): $(OBJS) | $(BUILD_DIR)
+	@echo "Linking $(TARGET)..."
+	$(CXX) $(OBJS) -o $@ $(LDFLAGS) $(QT_LIB_PATH) $(QT_LIBS)
+	@echo "Build successful: $(TARGET)"
 
-# Rule to compile each .cpp file into a .o file
-$(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
+# Generic rule to compile any .cpp file from its source directory into
+# a corresponding .o file within the build directory structure.
+# For example:
+# To make 'build/src/main.o', it looks for 'src/main.cpp'
+# To make 'build/src/core/process.o', it looks for 'src/core/process.cpp'
+$(BUILD_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@) # Create the target subdirectory (e.g., build/src, build/src/core) if it doesn't exist
+	@echo "Compiling $< to $@"
 	$(CXX) $(CXXFLAGS) $(QT_INCLUDE_PATH) -c $< -o $@
 
-# Rule to link all object files into the final executable
-$(TARGET): $(OBJS)
-	$(CXX) $(OBJS) -o $@ $(LDFLAGS) $(QT_LIB_PATH) $(QT_LIBS)
+# Rule to create the main build directory if it doesn't exist
+$(BUILD_DIR):
+	@echo "Creating build directory: $(BUILD_DIR)"
+	mkdir -p $(BUILD_DIR)
 
-# Clean target to remove compiled files
+# Clean target to remove compiled files and directories
 clean:
-	rm -f $(BUILD_DIR)/*.o $(TARGET)
+	@echo "Cleaning build directory: $(BUILD_DIR)..."
+	@rm -rf $(BUILD_DIR)
+	@echo "Clean complete."
 
 # Phony targets to prevent conflicts with file names
 .PHONY: all clean

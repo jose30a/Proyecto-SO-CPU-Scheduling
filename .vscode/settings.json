@@ -1,5 +1,5 @@
 {
-    "C_Cpp.default.compilerPath": "C:/MinGW/bin/g++.exe", // IMPORTANT: Adjust this path to your g++ executable
+    "C_Cpp.default.compilerPath": "C:/msys64/mingw64/bin/gcc.exe", // IMPORTANT: Adjust this path to your g++ executable
     "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.intelliSenseMode": "gcc-x64",
     "C_Cpp.autocompleteAddParentheses": true,

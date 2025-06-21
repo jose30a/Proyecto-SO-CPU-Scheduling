@@ -6,9 +6,17 @@ Importante instalar:
 
 - Para compilar el proyecto en la terminal escribe el comando:
 
-    make all
+    mingw32-make all
+
+    o tambien sirve ctrl+shift+b
 
 generará simulator.exe en el directorio build
+
+
+
+- Para limpiar los ejecutables anterior
+
+    mingw32-make clean
 
 
 

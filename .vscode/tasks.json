@@ -4,23 +4,23 @@
         {
             "label": "Build with Makefile",
             "type": "shell",
-            "command": "make all", // This command executes your Makefile's 'all' target
+            "command": "mingw32-make all", // Changed from 'make all' to 'mingw32-make all'
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [
-                "$gcc" // Use the GCC problem matcher to parse compilation errors
+                "$gcc"
             ],
-            "detail": "Runs the Makefile to build the project"
+            "detail": "Runs the Makefile to build the project using mingw32-make"
         },
         {
             "label": "Clean with Makefile",
             "type": "shell",
-            "command": "make clean", // This command executes your Makefile's 'clean' target
+            "command": "mingw32-make clean", // Changed from 'make clean' to 'mingw32-make clean'
             "group": "build",
             "problemMatcher": [],
-            "detail": "Runs the Makefile to clean compiled files"
+            "detail": "Runs the Makefile to clean compiled files using mingw32-make"
         }
     ]
 }
