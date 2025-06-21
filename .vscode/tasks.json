@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build with Makefile",
+            "type": "shell",
+            "command": "make all", // This command executes your Makefile's 'all' target
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc" // Use the GCC problem matcher to parse compilation errors
+            ],
+            "detail": "Runs the Makefile to build the project"
+        },
+        {
+            "label": "Clean with Makefile",
+            "type": "shell",
+            "command": "make clean", // This command executes your Makefile's 'clean' target
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Runs the Makefile to clean compiled files"
+        }
+    ]
+}

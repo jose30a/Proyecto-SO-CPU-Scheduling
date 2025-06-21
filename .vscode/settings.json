@@ -1,0 +1,34 @@
+{
+    "C_Cpp.default.compilerPath": "C:/MinGW/bin/g++.exe", // IMPORTANT: Adjust this path to your g++ executable
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "C_Cpp.autocompleteAddParentheses": true,
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "*.h": "cpp",
+        "*.cpp": "cpp"
+    },
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.lambda": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.block": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.function": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.catch": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.doWhile": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.for": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.if": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.while": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.switch": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBracket.try": "newLine",
+    "C_Cpp.vcFormat.indent.caseLabels": true,
+    "C_Cpp.vcFormat.indent.preprocessor": "none",
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/src",
+        "${workspaceFolder}/src/core",
+        "${workspaceFolder}/src/algorithms",
+        "${workspaceFolder}/src/ui",
+        "C:/Qt/5.15.2/mingw81_64/include", // IMPORTANT: Adjust this path to your Qt include directory
+        "C:/Qt/5.15.2/mingw81_64/include/QtCore",
+        "C:/Qt/5.15.2/mingw81_64/include/QtGui",
+        "C:/Qt/5.15.2/mingw81_64/include/QtWidgets"
+    ],
+    "terminal.integrated.defaultProfile.windows": "Command Prompt" // Or "PowerShell", depending on preference
+}
